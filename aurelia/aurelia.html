@@ -79,12 +79,12 @@
           <h2>Features</h2>
           <ul>
               <li>MVVM - Convention over configuration</li>
-              <li>Plain Javascript <span class="jscode">ES6</span> / <span class="jscode">ES7</span> + Polyfills</li>
+              <li>Plain Javascript <span class="jscode">ES5</span> / <span class="jscode">ES6</span> / <span class="jscode">ES7</span> + Polyfills</li>
+              <li>Support <span class="htmlcode">TypeScript</span>, <span class="htmlcode">CoffeeScript</span>...</li>
               <li>Custom Elements (web components)</li>
               <li>Databinding</li>
               <li>Dependency Injection</li>
               <li>Easy integration of third party libraries</li>
-              <li>Support <span class="htmlcode">TypeScript</span>, <span class="htmlcode">CoffeeScript</span>...</li>
               <li><b>Entirely customizable</b> with <spanc class="jscode">Plugins</span></li>
           </ul>
         </section>
@@ -106,26 +106,26 @@
           <section>
             <h2>View</h2>
 <pre><code data-trim class="html">
-  <template>
-    <section>
-      <h2>${heading}</h2>
-      <form submit.delegate="welcome()">
-        <div>
-          <label>Name</label>
-          <input type="text" value.bind="name">
-        </div>
-        <div>
-          <p>Hi ${fullTitle}!</p>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </section>
-  </template>
+<template>
+  <section>
+    <h2>${heading}</h2>
+    <form submit.delegate="welcome()">
+      <div>
+        <label>Name</label>
+        <input type="text" value.bind="name">
+      </div>
+      <div>
+        <p>Hi ${fullTitle}!</p>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+</template>
 </code></pre>
             <p>
               <small>welcome.html</small>
             </p>
-            <p>A <span class="jscode">template</span> tag follows WebComponents standard.</p>
+            <p>A <span class="jscode">template</span> tag following HTML5 spec.</p>
           </section>
           <section>
             <h2>View-Model</h2>
@@ -151,23 +151,145 @@ export class Welcome {
           </section>
         </section>
 
+
+
+        <section>
+          <section>
+            <h2>Custom Elements</h2>
+            <ul>
+              <li>Custom tags with their own views</li>
+              <li>Custom attributes</li>
+              <li>Easily leverage ShadowDOM</li>
+              <li>Content Selectors (even without ShadowDOM)</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Custom Elements</h3>
+<pre><code class="jscode">import {inject} from 'aurelia-framework';
+export class SayHello {
+  @bindable to;
+  speak(){
+    alert('Hello ${this.to}!');
+  }
+}
+</code></pre>
+<pre><code class="html"><template>
+  <button click.trigger="speak()">Say Hello To ${to}</button>
+</template>
+</code></pre>
+
+<div>
+  <p>Usage</p>
+
+<pre><code class="html"><template>
+  <require from="./say-hello"></require>
+
+  <input type="text" ref="name">
+  <say-hello to.bind="name"></say-hello>
+</template>
+</code></pre>
+
+</div>
+          </section>
+
+          <section>
+            <h3>Dynamic Rendering</h3>
+            <p style="margin-top:5%;">Use the <span class="htmlcode">compose</span> element to dynamically choose the template to render depending on a condition</p>
+            <pre><code class="html"><template repeat.for="item of items">
+  <compose
+    model.bind="item"
+    view-model="widgets/${item.type}">
+  </compose>
+</template></code></pre>
+          </section>
+
+          <section>
+            <h3>View Lifecycle</h3>
+            <ul>
+              <li><b>bind(bindingContext)</b> - Invoked when the databinding engine binds the view.</li>
+              <li><b>unbind()</b> - Invoked when the databinding engine unbinds the view.</li>
+              <li><b>attached()</b> - Invoked when the view is attached to the DOM.</li>
+              <li><b>detached()</b> - Invoked when the view is detached from the DOM.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>Aurelia Attributes</h3>
+            <div>
+              <p style="margin-top: 5%;">Show / hide HTML elements</p>
+              <pre><code class="html"><div show.bind="isSaving" class="spinner"></div></code></pre>
+            </div>
+            <div>
+              <p>Conditionally add / remove HTML elements</p>
+              <pre><code class="html"><div if.bind="isLoggedIn" class="logout_box"></div></code></pre>
+            </div>
+            <div>
+              <p>Render multiple times</p>
+<pre><code>
+<ul>
+  <li repeat.for="[id, user] of users">${id} ${user.fullName}</li>
+</ul>
+</code></pre>
+            </div>
+          </section>
+
+          <section>
+            <h3>Custom Attributes</h3>
+            <p>A simple example : the Aurelia <span class="htmlcode">show</span> attribute</p>
+            <pre><code class="jscode">@customAttribute('my-show')
+@inject(Element)
+export class MyShow {
+  constructor(element) {
+    this.element = element;
+  }
+
+  valueChanged(newValue){
+    if (newValue) {
+      this.element.classList.remove('aurelia-hide');
+    } else {
+      this.element.classList.add('aurelia-hide');
+    }
+  }
+}</code></pre>
+
+<pre><code class="html">
+<require from="./myshow"></require>
+<div my-show.bind="isShowed">Text to hide</div>
+</code></pre>
+
+          </section>
+
+        </section>
+
+
         <section>
           <section>
             <h2>Dependency Injection</h2>
             <pre><code data-trim  class="jscode">
-import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import {UserDetails} from 'user';
 
-@inject(HttpClient, UserDetails)
 export class Customer{
+  static inject() [HttpClient, UserDetails];
   constructor(http, user){
     this.http = http;
     this.user = user;
   }
 }
             </code></pre>
-            <p><span class="jscode">ES7</span> decorators</p>
+            <p>Or using <span class="jscode">ES7</span> decorators</p>
+            <pre><code data-trim  class="jscode">
+import {inject} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-http-client';
+
+@inject(HttpClient)
+export class Customer{
+  constructor(http){
+    this.http = http;
+  }
+}
+            </code></pre>
           </section>
 
           <section>
@@ -342,126 +464,14 @@ export class Welcome{}
         </section>
 
 
-
-        <section>
-          <section>
-            <h2>Custom Elements</h2>
-            <ul>
-              <li>Custom tags with their own views</li>
-              <li>Custom attributes</li>
-              <li>Easily leverage ShadowDOM</li>
-              <li>Content Selectors</li>
-            </ul>
-          </section>
-
-          <section>
-            <h3>Aurelia Attributes</h3>
-            <div>
-              <p style="margin-top: 5%;">Show / hide HTML elements</p>
-              <pre><code class="html"><div show.bind="isSaving" class="spinner"></div></code></pre>
-            </div>
-            <div>
-              <p>Conditionally add / remove HTML elements</p>
-              <pre><code class="html"><div if.bind="isLoggedIn" class="logout_box"></div></code></pre>
-            </div>
-            <div>
-              <p>Render multiple times</p>
-<pre><code>
-<ul>
-  <li repeat.for="[id, user] of users">${id} ${user.fullName}</li>
-</ul>
-</code></pre>
-            </div>
-          </section>
-
-          <section>
-            <h3>Dynamic Rendering</h3>
-            <p style="margin-top:5%;">Use the <span class="htmlcode">compose</span> element to dynamically choose the template to render depending on a condition</p>
-            <pre><code class="html"><template repeat.for="item of items">
-    <compose
-      model.bind="item"
-      view-model="widgets/${item.type}">
-    </compose>
-</template></code></pre>
-          </section>
-
-          <section>
-            <h3>Custom Attributes</h3>
-            <p>A simple example : the Aurelia <span class="htmlcode">show</span> attribute</p>
-            <pre><code class="jscode">@customAttribute('my-show')
-@inject(Element)
-export class MyShow {
-  constructor(element) {
-    this.element = element;
-  }
-
-  valueChanged(newValue){
-    if (newValue) {
-      this.element.classList.remove('aurelia-hide');
-    } else {
-      this.element.classList.add('aurelia-hide');
-    }
-  }
-}</code></pre>
-
-<pre><code class="html">
-<require from="./myshow"></require>
-<div my-show.bind="isShowed">Text to hide</div>
-</code></pre>
-
-          </section>
-
-          <section>
-            <h3>Custom Elements</h3>
-<pre><code class="jscode">
-export class SayHello {
-  @bindable to;
-
-  speak(){
-    alert('Hello ${this.to}!');
-  }
-}
-</code></pre>
-<pre><code class="html">
-<template>
-  <button click.trigger="speak()">Say Hello To ${to}</button>
-</template>
-</code></pre>
-
-<div>
-  <p>Usage</p>
-
-<pre><code class="html">
-<template>
-  <require from="./say-hello"></require>
-
-  <input type="text" ref="name">
-  <say-hello to.bind="name"></say-hello>
-</template>
-</code></pre>
-
-</div>
-          </section>
-
-          <section>
-            <h3>View Lifecycle</h3>
-            <ul>
-              <li><b>bind(bindingContext)</b> - Invoked when the databinding engine binds the view.</li>
-              <li><b>unbind()</b> - Invoked when the databinding engine unbinds the view.</li>
-              <li><b>attached()</b> - Invoked when the view is attached to the DOM.</li>
-              <li><b>detached()</b> - Invoked when the view is detached from the DOM.</li>
-            </ul>
-          </section>
-        </section>
-
         <section>
           <h2>Current Status</h2>
           <ul>
             <li>Currently in pre-beta version</li>
             <li>API nearly stabilized</li>
             <li>Community growing and very active</li>
-            <li>Most users and contributors previous Angular adepts</li>
-            <li>Supports all recent browsers, and now IE9 too</li>
+            <li>Users and Contributors coming from wide background</li>
+            <li>Supports all recent browsers (including IE9)</li>
             <li>Team focusing on Documentation and Performance</li>
           </ul>
         </section>
