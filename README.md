@@ -1,3 +1,3 @@
-# Presentations
+# [Presentations](http://wshayes.github.io/presentations)
 
-Presentation for Aurelia Introduction
+[Aurelia Introduction](http://wshayes.github.io/presentations/aurelia/aurelia.html#/)
