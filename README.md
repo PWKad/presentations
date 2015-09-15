@@ -1,3 +1,3 @@
-# presentations
+# Presentations
 
-Starting point for presentation on Aurelia for dallas.js
+Presentation for Aurelia Introduction
