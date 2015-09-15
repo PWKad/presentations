@@ -49,6 +49,7 @@
           <img class="logo" src="img/aurelia-logo.png"></img>
           <p>
             <small>Presentation forked from <a href="https://twitter.com/samudurand">Samuel Durand</a></small>
+            <small>and then forked from <a href="https://github.com/PWKad/presentations">Patrick Walters</a></small>
           </p>
           <p>
             <a href="http://gitter.im/aurelia/discuss">Get help in the official gitter</a>
@@ -62,7 +63,7 @@
             <li>Simplify your application development.</li>
             <li>Empower your team of developers to focus on the solution, not the framework.</li>
             <li>Build future-proof software.</li>
-            <li>Compromised of many optional, small modules.</li>
+            <li>Comprised of many optional, small modules.</li>
           </ol>
         </section>
 
@@ -80,7 +81,7 @@
           <ul>
               <li>MVVM - Convention over configuration</li>
               <li>Plain Javascript <span class="jscode">ES5</span> / <span class="jscode">ES6</span> / <span class="jscode">ES7</span> + Polyfills</li>
-              <li>Support <span class="htmlcode">TypeScript</span>, <span class="htmlcode">CoffeeScript</span>...</li>
+              <li>Supports <span class="htmlcode">TypeScript</span>, <span class="htmlcode">CoffeeScript</span>...</li>
               <li>Custom Elements (web components)</li>
               <li>Databinding</li>
               <li>Dependency Injection</li>
@@ -103,6 +104,7 @@
             <p>Convention based on files names and ES6 modules.</p>
             <p>Configurable to match your desired application structure.</p>
           </section>
+
           <section>
             <h2>View</h2>
 <pre><code data-trim class="html">
@@ -127,6 +129,7 @@
             </p>
             <p>A <span class="jscode">template</span> tag following HTML5 spec.</p>
           </section>
+
           <section>
             <h2>View-Model</h2>
 <pre><code data-trim class="jscode">
@@ -149,6 +152,7 @@ export class Welcome {
             <p>Simple <span class="jscode">ES6</span> / <span class="jscode">ES7</span> code</p>
 
           </section>
+
         </section>
 
 
@@ -196,7 +200,8 @@ export class SayHello {
           <section>
             <h3>Dynamic Rendering</h3>
             <p style="margin-top:5%;">Use the <span class="htmlcode">compose</span> element to dynamically choose the template to render depending on a condition</p>
-            <pre><code class="html"><template repeat.for="item of items">
+
+  <pre><code class="html"><template repeat.for="item of items">
   <compose
     model.bind="item"
     view-model="widgets/${item.type}">
@@ -237,7 +242,8 @@ export class SayHello {
           <section>
             <h3>Custom Attributes</h3>
             <p>A simple example : the Aurelia <span class="htmlcode">show</span> attribute</p>
-            <pre><code class="jscode">@customAttribute('my-show')
+
+<pre><code class="jscode">@customAttribute('my-show')
 @inject(Element)
 export class MyShow {
   constructor(element) {
@@ -266,7 +272,8 @@ export class MyShow {
         <section>
           <section>
             <h2>Dependency Injection</h2>
-            <pre><code data-trim  class="jscode">
+
+<pre><code data-trim  class="jscode">
 import {HttpClient} from 'aurelia-http-client';
 import {UserDetails} from 'user';
 
@@ -277,9 +284,11 @@ export class Customer{
     this.user = user;
   }
 }
-            </code></pre>
+</code></pre>
+
             <p>Or using <span class="jscode">ES7</span> decorators</p>
-            <pre><code data-trim  class="jscode">
+
+<pre><code data-trim  class="jscode">
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 
@@ -326,9 +335,10 @@ export class Welcome{}
             <pre><code data-trim  class="jscode">
 @inject(Optional.of(LoggedInUser))
 export class Welcome{}
-            </code></pre>
+</code></pre>
 
           </section>
+
         </section>
 
         <section>
@@ -347,6 +357,7 @@ export class Welcome{}
 </select>
 </code></pre>
           </section>
+
           <section>
             <p>Bind any property using <span class="htmlcode">.bind</span></p>
 
@@ -354,10 +365,13 @@ export class Welcome{}
 <input type="text" value.bind="firstName">
 
 <!--One-way binding for others-->
-<a href.bind="url">Aurelia</a></pre></code>
+<a href.bind="url">Aurelia</a>
+</pre></code>
+
             <div>
               <p>Specify the databinding mode</p>
-              <pre><code class="html"><!--Two-way binding-->
+
+<pre><code class="html"><!--Two-way binding-->
 <input type="text" value.two-way="firstName">
 
 <!--One-way binding-->
@@ -366,6 +380,7 @@ export class Welcome{}
 <!--One-time binding-->
 <label class.one-time="labelClass"></label>
 </pre></code>
+
             </div>
           </section>
 
@@ -378,15 +393,19 @@ export class Welcome{}
 <!--A single event handler for the whole document-->
 <button click.delegate="sayHello()">Say Hello</button></code></pre>
             <p>Pass a function reference</p>
+
 <pre><code class="html">
 <my-button custom.call="sayHello()">Say Hello</my-button>
 </code></pre>
+
           </section>
 
           <section>
             <h3>String Interpolation</h3>
             <p>Simple value</p>
-            <pre><code class="html"><span>${user.firstName} ${user.lastName}</span></code></pre>
+
+<pre><code class="html"><span>${user.firstName} ${user.lastName}</span></code></pre>
+
             <p>Expressions handling</p>
             <pre><code class="html"><div class="${color} ${isHappy ? 'green' : 'red'}"></div></code></pre>
           </section>
@@ -394,45 +413,52 @@ export class Welcome{}
           <section>
             <h3>Select component</h3>
             <br/>
+
 <pre><code class="html">
 <select value.bind="favoriteColor">
   <option>Select A Color</option>
   <option repeat.for="clr of clrs" value.bind="clr">${clr}</option>
 </select>
 </code></pre>
+
 <br/>
+
 <pre><code class="html">
 <select value.bind="selectedItem">
   <option>Select An Item</option>
   <option repeat.for="it of items" model.bind="it">${it.name}</option>
 </select>
 </code></pre>
+
           </section>
         </section>
 
         <section>
           <section>
             <h2>Routing</h2>
-<pre><code class="jscode">export class App {
 
+<pre><code class="jscode">
+export class App {
   configureRouter(config, router){
     config.title = 'Aurelia';
     config.map([
-      { route: ['','welcome'], moduleId: './welcome', nav: true,
-        title:'Welcome' },
-      { route: 'todos',       moduleId: './todos/todolist', nav: true },
-      { route: 'details',     moduleId: './todos/details' }
+      { route: ['','welcome'], name: 'welcome',
+        moduleId: './welcome', nav: true, title:'Welcome' },
+      { route: 'todos', name: 'todolist',
+        moduleId: './todos/todolist', nav: true },
+      { route: 'details', name: 'details', moduleId: './todos/details' }
     ]);
 
     this.router = router;
   }
-
 }
 </code></pre>
+
           </section>
 
           <section>
             <h3>Screen Activation Lifecycle</h3>
+
 <pre><code class="jscode">export class Home {
 
   //Can we navigate to this page
@@ -449,6 +475,7 @@ export class Welcome{}
 
 }
 </code></pre>
+
             <p>Supports async operations through <span class="jscode">ES6 Promises</span></p>
           </section>
 
@@ -500,8 +527,15 @@ export class Welcome{}
         </section>
 
         <section>
-          <h2>That's all folks !</h2>
-          <p>Questions ?</p>
+          <h2>That's all folks !  Questions?</h2>
+
+
+          <ul>
+            <li>Official site - <a href="http://aurelia.io">http://aurelia.io</a></li>
+            <li>Semi-official Plunker - <a href="http://bit.ly/aurelia-plunker">http://bit.ly/aurelia-plunker</a></li>
+            <li><a href="http://www.pluralsight.com/courses/building-applications-aurelia">PluralSight Course</a></li>
+            <li>Unofficial Links/Notes - <a href="https://github.com/wshayes/aurelia-notes/wiki">https://github.com/wshayes/aurelia-notes/wiki</a></li>
+          </ul>
         </section>
 
       </div>
