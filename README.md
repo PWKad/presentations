@@ -1,3 +1,3 @@
-# presentations
+# [Presentations](http://wshayes.github.io/presentations)
 
-Starting point for presentation on Aurelia for dallas.js
+[Aurelia Introduction](http://wshayes.github.io/presentations/aurelia/aurelia.html#/)
