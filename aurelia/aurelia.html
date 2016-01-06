@@ -166,7 +166,7 @@ export class Welcome {
 
           <section>
             <h3>Custom Elements</h3>
-<pre><code class="jscode">import {inject} from 'aurelia-framework';
+<pre><code class="jscode">import {bindable} from 'aurelia-framework';
 export class SayHello {
   @bindable to;
   speak(){
@@ -237,9 +237,10 @@ export class SayHello {
           <section>
             <h3>Custom Attributes</h3>
             <p>A simple example : the Aurelia <span class="htmlcode">show</span> attribute</p>
-            <pre><code class="jscode">@customAttribute('my-show')
-@inject(Element)
+            <pre><code class="jscode">import {customAttribute} from 'aurelia-framework';
+@customAttribute('my-show')
 export class MyShow {
+  static inject = [Element];
   constructor(element) {
     this.element = element;
   }
@@ -467,23 +468,20 @@ export class Welcome{}
         <section>
           <h2>Current Status</h2>
           <ul>
-            <li>Currently in pre-beta version</li>
-            <li>API nearly stabilized</li>
+            <li>Currently in beta 1</li>
+            <li>Beta 2 finalizing spec changes</li>
+            <li>API stabilized</li>
             <li>Community growing and very active</li>
             <li>Users and Contributors coming from wide background</li>
             <li>Supports all recent browsers (including IE9)</li>
-            <li>Team focusing on Documentation and Performance</li>
           </ul>
         </section>
 
         <section>
           <h2>Future</h2>
           <ul>
-            <li>Interactive documentation</li>
-            <li>Migration documents</li>
             <li>More plugins</li>
             <li>Version 1.0 soon</li>
-            <li>More features</li>
           </ul>
         </section>
 
